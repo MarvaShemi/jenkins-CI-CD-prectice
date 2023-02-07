@@ -7,14 +7,5 @@ pipeline {
                 sh 'python --version'
             }
         }
-        stage('Build image') {
-            dockerImage = docker.build("jenkinsrealthing:latest .")
-            }
-        }
-        stage('Push image') {
-            withDockerRegistry ([ credentialsId: 341278251429, url: "https://github.com/MarvaShemi/jenkins-CI-CD-prectice.git" ]) {
-                dockerImage.push()
-                }
-            }
+
     }
-}
