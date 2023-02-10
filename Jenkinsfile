@@ -4,11 +4,6 @@ pipeline {
     options {
         skipStagesAfterUnstable()
     }
-    stage('Cloning Git') {
-            steps {
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/MarvaShemi/jenkins-CI-CD-prectice.git']])
-            }
-        }
     stages {
         stage('Build') {
             steps {
