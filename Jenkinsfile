@@ -1,20 +1,31 @@
 /* Requires the Docker Pipeline plugin */
 pipeline {
-    agent { docker { image 'python:3.10.7-alpine' } }
+    agent any
+    options {
+        skipStagesAfterUnstable()
+    }
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
-                sh 'python --version'
+                script{
+                    app = docker.build("coolpipeline")
+                }
             }
         }
-        stage('Build image') {
-            dockerImage = docker.build("jenkinsrealthing:latest .")
+        stage('Test'){
+            steps {
+                echo 'Empty'
+            }
         }
-        stage('Push image') {
-            withDockerRegistry ([ credentialsId: 341278251429, url: "https://github.com/MarvaShemi/jenkins-CI-CD-prectice.git" ]) {
-                dockerImage.push()
+        stage('Deploy') {
+            steps {
+                script{
+                    docker.withRegistry('http://341278251429.dkr.ecr.eu-west-1.amazonaws.com', 'ecr:eu-west-1:aws-credentials') {
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
+                    }
+                }
             }
         }
     }
 }
-
