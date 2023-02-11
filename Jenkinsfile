@@ -8,20 +8,18 @@ pipeline {
         IMAGE_TAG="v1"
         REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
-    stage('Logging into AWS ECR') {
-            steps {
-                script {
-                sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+    options {
+        skipStagesAfterUnstable()
+    }
+    stages {
+         stage('Clone repository') { 
+            steps { 
+                script{
+                checkout scm
                 }
-                 
             }
         }
-        
-        stage('Cloning Git') {
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/MarvaShemi/jenkins-CI-CD-prectice.git']]])     
-            }
-        }
+    }
     stages {
         stage('Build') {
             steps {
