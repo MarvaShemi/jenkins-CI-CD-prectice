@@ -5,6 +5,15 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
+         stage('Clone repository') { 
+            steps { 
+                script{
+                checkout scm
+                }
+            }
+        }
+    }
+    stages {
         stage('Build') {
             steps {
                 script{
