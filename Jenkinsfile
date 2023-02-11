@@ -6,7 +6,7 @@ pipeline {
     }
     stage('Cloning Git') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/sd031/aws_codebuild_codedeploy_nodeJs_demo.git']]])     
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/MarvaShemi/jenkins-CI-CD-prectice.git']])     
             }
         }
     stages {
