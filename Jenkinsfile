@@ -4,11 +4,15 @@ pipeline {
     options {
         skipStagesAfterUnstable()
     }
-    stage('Cloning Git') {
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/MarvaShemi/jenkins-CI-CD-prectice.gi']]])     
+    stages {
+         stage('Clone repository') { 
+            steps { 
+                script{
+                checkout scm
+                }
             }
         }
+    }
     stages {
         stage('Build') {
             steps {
