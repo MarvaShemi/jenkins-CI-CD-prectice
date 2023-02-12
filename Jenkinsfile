@@ -1,13 +1,6 @@
 /* Requires the Docker Pipeline plugin */
 pipeline {
     agent any
-    environment {
-        AWS_ACCOUNT_ID="341278251429"
-        AWS_DEFAULT_REGION="eu-west-1"
-        IMAGE_REPO_NAME="coolpipeline"
-        IMAGE_TAG="v1"
-        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
-    }
     options {
         skipStagesAfterUnstable()
     }
